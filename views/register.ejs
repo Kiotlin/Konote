@@ -1,13 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= title %></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery/3.4.1/core.js">
+    <link rel="stylesheet" href="/stylesheets/register.css">
 </head>
+
 <body>
-    <h1><%= title %></h1>
-    <h2>ようこそ、<%= title %>へ</h2>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h6>Join Konote</h6>
+            <h2>Create your account</h2>
+        </div>
+
+        <div class="wrapper">
+            <div class="content">
+                <h4 class="mb-3">User information</h4>
+                <form class="needs-validation" novalidate>
+
+                    <div class="mb-3">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                            <input type="text" class="form-control" id="username" placeholder="Username" required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email address<span class="text-muted">(Optional)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for receiving notices.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address">Password</label>
+                        <input type="text" class="form-control" id="address" placeholder="" required>
+                        <div class="invalid-feedback">
+                            Please enter your password.
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="save-info">
+                        <label class="custom-control-label" for="save-info">Send me occasional product updates, announcements and offers.</label>
+                    </div>
+                    <hr class="mb-4">
+
+                    <h4 class="mb-3">Verify your register</h4>
+                    <div class="g-recaptcha" data-sitekey="6LevkMYUAAAAAHa2PSkLOntwEcgHcSK4z8ZUYcvG"></div>
+                    <div class="recaptcha-feedback"></div>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Join Konote</button>
+                </form>
+            </div>
+        </div>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2017-2019 Konote</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="/javascripts/form-validation.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=en" async defer></script>
+
 </body>
+
 </html>
