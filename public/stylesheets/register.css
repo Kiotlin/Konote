@@ -1,5 +1,5 @@
 .container {
-    max-width: 560px;
+    max-width: 560px !important;
 }
   
 .lh-condensed { line-height: 1.25; }
