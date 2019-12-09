@@ -1,5 +1,4 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var passport = require('passport');
 var User = require('../models/user');
 
@@ -14,14 +13,30 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Sign in to Konote · Konote' });
 });
 
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+// user login
+router.post('/login', passport.authenticate("login", {
+
+  successRedirect: "/users",
+  failureRedirect: "/login",
+  failureFlash: true
+
+}));
+
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Join Konote · Konote' });
 });
 
-router.post('/register', function(req, res, next) {
+router.get('/welcome', function(req, res) {
+  res.render('utils/welcome');
+});
 
-  // connect to MongoDB
-  mongoose.connect("mongodb://localhost:27017/konote", { useNewUrlParser: true });
+// user register
+router.post('/register', function(req, res, next) {
   
   // analyse register data
   var username = req.body.username;
@@ -53,13 +68,9 @@ router.post('/register', function(req, res, next) {
       console.log('success: ' + newUser);
     });
 
-    next();
+    // redirect to success page
+    res.redirect('/welcome');
   });
-  // redirect to login page
-}, passport.authenticate("login", {
-  successRedirect: "/login",
-  failureRedirect: "/register",
-  failureFlash: true
-}));
+});
 
 module.exports = router;
