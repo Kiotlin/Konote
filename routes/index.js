@@ -9,6 +9,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Konote' });
 });
 
+router.get('/notebook', function(req, res, next) {
+  res.render('notebook');
+});
+
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Sign in to Konote · Konote' });
 });
