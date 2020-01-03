@@ -10,7 +10,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/notebook', function(req, res, next) {
-  res.render('notebook');
+  res.render('user/notebook');
+});
+
+router.get('/notebook2', function(req, res, next) {
+  res.render('user/notebook2');
 });
 
 router.get('/login', function(req, res, next) {
