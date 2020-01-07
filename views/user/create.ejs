@@ -33,21 +33,21 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/users/kiokh/profile">
                                 <span data-feather="layers"></span>
                                 プロフィール
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/notebook">
+                            <a class="nav-link" href="/users/kiokh/calendar">
                                 <span data-feather="home"></span>
-                                カレンダ <span class="sr-only">(current)</span>
+                                カレンダ
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/notebook2">
+                            <a class="nav-link active" href="/users/kiokh/create">
                                 <span data-feather="file"></span>
-                                新規作成
+                                新規作成 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -95,12 +95,14 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">新規作成</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button class="btn btn-sm btn-outline-secondary">同期</button>
-                            <button class="btn btn-sm btn-outline-secondary">輸出する</button>
+                            <button type="button" class="btn btn-outline-secondary">
+                                同期 <span class="badge badge-pill badge-secondary">1</span>
+                            </button>
                         </div>
                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
                             <span data-feather="calendar"></span>
@@ -113,11 +115,11 @@
                     <div id="toolbar" style="border: 1px solid #ccc;"></div>
 
                     <div style="padding: 5px 0; color: #ccc">タイトル</div>
-                    
-                    <div id="textEditor" style="border: 1px solid #ccc; height: 400px;">
+
+                    <div id="textEditor" style="border: 1px solid #ccc; height: 600px;">
                         <p>ようこそ！自由にメモをしてください</p>
                     </div>
-                    
+
                 </div>
 
             </main>
@@ -129,7 +131,6 @@
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="/javascripts/jquery-slim.min.js"><\/script>')</script>
-    <script src="/javascripts/popper.min.js"></script>
 
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
@@ -143,6 +144,16 @@
         var E = window.wangEditor;
         var editor = new E('#toolbar', '#textEditor');
         editor.create();
+    </script>
+
+    <!-- socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
     </script>
 </body>
 

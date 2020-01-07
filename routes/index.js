@@ -9,14 +9,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Konote' });
 });
 
-router.get('/notebook', function(req, res, next) {
-  res.render('user/notebook');
-});
-
-router.get('/notebook2', function(req, res, next) {
-  res.render('user/notebook2');
-});
-
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Sign in to Konote · Konote' });
 });
@@ -29,7 +21,7 @@ router.get('/logout', function(req, res) {
 // user login
 router.post('/login', passport.authenticate("login", {
 
-  successRedirect: "/users",
+  successRedirect: "/users/kiokh/profile",
   failureRedirect: "/login",
   failureFlash: true
 

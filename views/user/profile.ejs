@@ -33,19 +33,19 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link active" href="/users/kiokh/profile">
                                 <span data-feather="layers"></span>
-                                プロフィール
+                                プロフィール <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/notebook">
+                            <a class="nav-link" href="/users/kiokh/calendar">
                                 <span data-feather="home"></span>
-                                カレンダ <span class="sr-only">(current)</span>
+                                カレンダ 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/notebook2">
+                            <a class="nav-link" href="/users/kiokh/create">
                                 <span data-feather="file"></span>
                                 新規作成
                             </a>
@@ -95,73 +95,49 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">カレンダ</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button class="btn btn-sm btn-outline-secondary">シェア</button>
-                            <button class="btn btn-sm btn-outline-secondary">輸出する</button>
-                        </div>
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar"></span>
-                            今週
-                        </button>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">プロフィール</h1>
+                </div>
+
+                <div class="media" style="padding-bottom: 10px;">
+                    <img src="/images/avatar.png" class="mr-3" alt="Kiokh">
+                    <div class="media-body">
+                        <h5 class="mt-0">Kiokh</h5>
+                        あえて毎日「できたこと」を書くことで、つい陥りがちなネガティブな視点を矯正し、自己肯定感を高められるのです。
                     </div>
                 </div>
 
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-                <h2>ログ</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>時間</th>
-                                <th>タイトル</th>
-                                <th>操作者</th>
-                                <th>字数</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1575818056615</td>
-                                <td>xxxxxxxx</td>
-                                <td>Kiokh</td>
-                                <td>2600</td>
-                            </tr>
-                            <tr>
-                                <td>1575816843135</td>
-                                <td>xxxxxxxx</td>
-                                <td>Kiokh</td>
-                                <td>5603</td>
-                            </tr>
-                            <tr>
-                                <td>1575828762115</td>
-                                <td>xxxxxxxx</td>
-                                <td>Kiokh</td>
-                                <td>809</td>
-                            </tr>
-                            <tr>
-                                <td>1575813695115</td>
-                                <td>xxxxxxxx</td>
-                                <td>Kiokh</td>
-                                <td>150</td>
-                            </tr>
-                            <tr>
-                                <td>1575813168477</td>
-                                <td>xxxxxxxx</td>
-                                <td>Kiokh</td>
-                                <td>4002</td>
-                            </tr>
-                            <tr>
-                                <td>1575818031695</td>
-                                <td>xxxxxxxx</td>
-                                <td>Kiokh</td>
-                                <td>653</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Kiokh" aria-label="Username"
+                        aria-describedby="basic-addon1">
                 </div>
+
+                <div class="mb-3">
+                    <label for="email">メールアドレス<span class="text-muted">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" name="email"
+                        placeholder="ilvanime121000@gmail.com">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password">パスワード</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="**********">
+                </div>
+
+                <div class="mb-3">
+                    <label for="hitokoto">一言</label>
+                    <input type="hitokoto" class="form-control" id="hitokoto" name="hitokoto"
+                        placeholder="あえて毎日「できたこと」を書くことで、つい陥りがちなネガティブな視点を矯正し、自己肯定感を高められるのです">
+                </div>
+
+                <div class="button text-right" style="padding-top: 50px;">
+                    <button type="button" class="btn btn-secondary mr-2">変更</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+
             </main>
         </div>
     </div>
@@ -171,17 +147,12 @@
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="/javascripts/jquery-slim.min.js"><\/script>')</script>
-    <script src="/javascripts/popper.min.js"></script>
 
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
     </script>
-
-    <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script src="/javascripts/calendar.js"></script>
 </body>
 
 </html>
