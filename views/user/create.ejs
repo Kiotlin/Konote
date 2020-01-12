@@ -10,7 +10,8 @@
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="/stylesheets/notebook.css" rel="stylesheet">
@@ -100,13 +101,12 @@
                     <h1 class="h2">新規作成</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-outline-secondary">
-                                同期 <span class="badge badge-pill badge-secondary">1</span>
+                            <button id="synchronize" type="button" class="btn btn-outline-secondary">
+                                同期 <span id="unsaved" class="badge badge-light">0</span>
                             </button>
                         </div>
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar"></span>
-                            今週
+                        <button id="saveButton" class="btn btn-sm btn-outline-secondary">
+                            保存
                         </button>
                     </div>
                 </div>
@@ -114,12 +114,32 @@
                 <div id="editor">
                     <div id="toolbar" style="border: 1px solid #ccc;"></div>
 
-                    <div style="padding: 5px 0; color: #ccc">タイトル</div>
+                    <div class="input-group mb-3" style="padding-top: 10px; max-width: 500px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1" style="background-color:#ffff;">タイトル</span>
+                        </div>
+                        <input id="titleInput" type="text" class="form-control" placeholder="タイトルください"
+                            aria-label="title" aria-describedby="basic-addon1">
+                    </div>
 
                     <div id="textEditor" style="border: 1px solid #ccc; height: 600px;">
                         <p>ようこそ！自由にメモをしてください</p>
                     </div>
 
+                </div>
+
+                <div class="toast mt-3" data-delay="5000" style="position: absolute; top: 50px; right: 200px;">
+                    <div class="toast-header">
+                        <span data-feather="check" class="mr-2"></span>
+                        <strong class="mr-auto">保存完了</strong>
+                        <small>ただいま</small>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        Some text inside the toast body
+                    </div>
                 </div>
 
             </main>
@@ -132,6 +152,17 @@
         crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="/javascripts/jquery-slim.min.js"><\/script>')</script>
 
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
@@ -140,20 +171,70 @@
 
     <!-- editor -->
     <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
-    <script>
-        var E = window.wangEditor;
-        var editor = new E('#toolbar', '#textEditor');
-        editor.create();
-    </script>
 
-    <!-- socket.io -->
+    <!-- socket.io & editor generator-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
+        // create editor
+        var E = window.wangEditor;
+        var editor = new E('#toolbar', '#textEditor');
+        var newEdited = 0;
+        editor.customConfig.onchange = function (html) {
+            newEdited += 1;
+        }
+        editor.customConfig.onchangeTimeout = 4000;
+        editor.create();
+
+        // create socket 
         var socket = io();
-        socket.on('news', function (data) {
-            console.log(data);
-            socket.emit('my other event', { my: 'data' });
+        var element = function (id) { return document.getElementById(id); }
+        var saveButton = element('saveButton');
+
+        saveButton.addEventListener('click', function () {
+            var username = 'kiokh';
+            var title = element('titleInput').value;
+            var content = editor.txt.html();
+            var author = 'kiokh';
+
+            socket.emit('save', {
+                username: username,
+                title: title,
+                author: author,
+                content: content
+            });
         });
+
+        socket.on('saveSuccess', function () {
+            var unsaved = element('unsaved');
+            unsaved.innerHTML = '0'
+            newEdited = 0;
+            $('.toast').toast('show');
+        });
+
+        // monitoring text change
+        var textMonitor = setInterval(() => {
+            console.log(newEdited);
+
+            if (newEdited > 0) {
+                var newContent = editor.txt.html();
+                var title = element('titleInput').value;
+
+                socket.emit('newChange', {
+                    title: title,
+                    content: newContent
+                });
+            }
+        }, 12000);
+
+        var buttonSettor = setInterval(() => {
+            var unsaved = element('unsaved');
+            unsaved.innerHTML = newEdited;
+        }, 1000);
+
+        // socket.on('changed', function (n) {
+
+        // });
+
     </script>
 </body>
 
